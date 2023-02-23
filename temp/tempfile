@@ -1,0 +1,46 @@
+class remember{ mylist *stack[5]; int top=1, bottom=-1;  public:
+    bool isEmpty(){ return top+1; }
+    mylist* deepCopyFunction(mylist* head){
+        mylist *temp=head, *copiedData,*start;
+        start=copiedData;
+        while(temp!=NULL){
+            copiedData=temp;
+            temp=temp->next;
+            copiedData=copiedData->next;
+        }
+        return start;
+    }
+    void pushFunction(mylist *head){
+            if(top==-1){
+                top=bottom=0;
+                stack[top] = deepCopyFunction(head);
+            }
+            else if((5+bottom-1)%5==top){
+                bottom=(bottom+1)%5;
+                top=(top+1)%5;
+                stack[top] = deepCopyFunction(head);
+            }
+            else {
+                top=(top+1)%5;
+                stack[top]=deepCopyFunction(head);
+            }
+    }
+    mylist* pop(){
+        mylist* temp;
+        if(top!=-1){
+            if(top==bottom){
+                temp=stack[top];
+                top=bottom=-1;
+            }
+            else 
+            {   
+                temp=stack[top];
+                top=(top+4)%5;
+            }
+        }
+        else{
+            temp=NULL;
+        }
+        return temp;
+    }
+};
